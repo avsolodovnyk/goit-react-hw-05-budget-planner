@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const Container = styled.div`
   text-align: center;
@@ -28,5 +29,9 @@ const Value = ({ label, value, isPositive }) => (
     <Amount>{value}&nbsp;&#x24;</Amount>
   </Container>
 );
-
+Value.propTypes = {
+  label: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  isPositive: PropTypes.string.isRequired,
+};
 export default Value;

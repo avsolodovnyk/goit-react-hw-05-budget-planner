@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Value from './Value';
 
 const Container = styled.section`
@@ -15,5 +17,16 @@ const Values = ({ budget, expenses, balance }) => (
     <Value label="Balance" value={balance} isPositive={balance >= 0} />
   </Container>
 );
-
-export default Values;
+const mapStateToProps = state => {
+  return {
+    budget: state.budget,
+    expenses: state.totalExpenses,
+    balance: state.balance,
+  };
+};
+Values.propTypes = {
+  budget: PropTypes.number.isRequired,
+  expenses: PropTypes.number.isRequired,
+  balance: PropTypes.number.isRequired,
+};
+export default connect(mapStateToProps)(Values);

@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import styled from "styled-components";
-import shortid from "shortid";
-import BudgetForm from "./BudgetForm";
-import ExpenseForm from "./ExpenseForm";
-import ExpensesTable from "./ExpensesTable";
-import Values from "./Values";
+import React, { Component } from 'react';
+import styled from 'styled-components';
+import shortid from 'shortid';
+import BudgetForm from './BudgetForm';
+import ExpenseForm from './ExpenseForm';
+import ExpensesTable from './ExpensesTable';
+import Values from './Values';
 
 const Container = styled.div`
   display: grid;
@@ -27,7 +27,7 @@ const calculateBalance = (budget, expenses) => budget - expenses;
 export default class App extends Component {
   state = {
     budget: 0,
-    expenses: []
+    expenses: [],
   };
 
   saveBudget = value => {
@@ -38,17 +38,17 @@ export default class App extends Component {
     const expense = {
       id: shortid.generate(),
       name,
-      amount: Number(amount)
+      amount: Number(amount),
     };
 
     this.setState(state => ({
-      expenses: [expense, ...state.expenses]
+      expenses: [expense, ...state.expenses],
     }));
   };
 
   removeExpense = id => {
     this.setState(state => ({
-      expenses: state.expenses.filter(expense => expense.id !== id)
+      expenses: state.expenses.filter(expense => expense.id !== id),
     }));
   };
 
@@ -59,12 +59,10 @@ export default class App extends Component {
 
     return (
       <Container>
-        <BudgetForm onSave={this.saveBudget} />
+        <BudgetForm />
         <Values budget={budget} expenses={totalExpenses} balance={balance} />
-        <ExpenseForm onSave={this.addExpense} />
-        {expenses.length > 0 && (
-          <ExpensesTable items={expenses} onRemove={this.removeExpense} />
-        )}
+        <ExpenseForm />
+        <ExpensesTable />
       </Container>
     );
   }

@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import actions from '../redux/actions/expenseFormActions';
 import Form from './shared/Form';
 import Label from './shared/Label';
 import Input from './shared/Input';
@@ -8,11 +11,13 @@ const labelStyles = `
   margin-bottom: 16px;  
 `;
 
-export default class ExpenseForm extends Component {
+class ExpenseForm extends Component {
   state = {
     name: '',
     amount: 0,
   };
+
+  static propTypes = { onSave: PropTypes.func.isRequired };
 
   handleChange = e => {
     this.setState({
@@ -28,6 +33,7 @@ export default class ExpenseForm extends Component {
   };
 
   render() {
+    const { amount, name } = this.state;
     return (
       <Form onSubmit={this.handleSubmit}>
         <Label customStyles={labelStyles}>
@@ -35,7 +41,7 @@ export default class ExpenseForm extends Component {
           <Input
             type="text"
             name="name"
-            value={this.state.name}
+            value={name}
             onChange={this.handleChange}
           />
         </Label>
@@ -44,7 +50,7 @@ export default class ExpenseForm extends Component {
           <Input
             type="number"
             name="amount"
-            value={this.state.amount}
+            value={amount}
             onChange={this.handleChange}
           />
         </Label>
@@ -54,3 +60,10 @@ export default class ExpenseForm extends Component {
     );
   }
 }
+const mapDispatchToProps = dispatch => {
+  return {
+    onSave: obj => dispatch(actions.addExpense(obj)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(ExpenseForm);
