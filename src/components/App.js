@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import shortid from 'shortid';
 import BudgetForm from './BudgetForm';
 import ExpenseForm from './ExpenseForm';
 import ExpensesTable from './ExpensesTable';
@@ -18,52 +17,12 @@ const Container = styled.div`
   margin-right: auto;
 `;
 
-const calculateTotalExpenses = expenses => {
-  return expenses.reduce((total, expense) => total + expense.amount, 0);
-};
-
-const calculateBalance = (budget, expenses) => budget - expenses;
-
-export default class App extends Component {
-  state = {
-    budget: 0,
-    expenses: [],
-  };
-
-  saveBudget = value => {
-    this.setState({ budget: value });
-  };
-
-  addExpense = ({ name, amount }) => {
-    const expense = {
-      id: shortid.generate(),
-      name,
-      amount: Number(amount),
-    };
-
-    this.setState(state => ({
-      expenses: [expense, ...state.expenses],
-    }));
-  };
-
-  removeExpense = id => {
-    this.setState(state => ({
-      expenses: state.expenses.filter(expense => expense.id !== id),
-    }));
-  };
-
-  render() {
-    const { expenses, budget } = this.state;
-    const totalExpenses = calculateTotalExpenses(expenses);
-    const balance = calculateBalance(budget, totalExpenses);
-
-    return (
-      <Container>
-        <BudgetForm />
-        <Values budget={budget} expenses={totalExpenses} balance={balance} />
-        <ExpenseForm />
-        <ExpensesTable />
-      </Container>
-    );
-  }
-}
+const App = () => (
+  <Container>
+    <BudgetForm />
+    <Values />
+    <ExpenseForm />
+    <ExpensesTable />
+  </Container>
+);
+export default App;
