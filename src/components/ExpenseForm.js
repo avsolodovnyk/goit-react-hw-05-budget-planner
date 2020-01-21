@@ -28,7 +28,10 @@ class ExpenseForm extends Component {
   handleSubmit = e => {
     e.preventDefault();
 
-    this.props.onSave({ ...this.state });
+    this.props.onSave({
+      name: this.state.name,
+      amount: Number(this.state.amount),
+    });
     this.setState({ name: '', amount: 0 });
   };
 
